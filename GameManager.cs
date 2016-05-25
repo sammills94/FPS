@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
-
+	public bool showingMouse;
 	public static GameManager instance;
 	public MatchSettings matchSettings;
 	private const string PLAYER_ID_PREFIX = "Player ";
@@ -24,6 +24,8 @@ public static void RegisterPlayer (string netID, Player player) {
 	}
 
 	void Awake() {
+		showingMouse = false;
+		Cursor.visible = false;
 		if (instance != null) {
 			Debug.LogError("More than one GameManager in scene");
 		} else {
@@ -31,5 +33,17 @@ public static void RegisterPlayer (string netID, Player player) {
 	}
 		
 	}
-
+	void Update() {
+		if(Input.GetKeyDown(KeyCode.Escape) && showingMouse == false){
+			showingMouse = true;
+			Cursor.visible =true;
+			//Cursor.lockState = false;
+		}
+		//if you press "escape" and the mouse is shown then make it not shown
+		else if(Input.GetKeyDown(KeyCode.Escape) && showingMouse == true){
+			showingMouse = false;
+			Cursor.visible =false;
+			//Cursor.lockState = true;
+		}
+	}
 }
